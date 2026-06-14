@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Lume")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0aff6cfcd2770e564c932b8c428745b736fcc73d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+172b20d7391a8a84b85c78f660166d87c115cf05")]
 [assembly: System.Reflection.AssemblyProductAttribute("Lume")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Lume")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
