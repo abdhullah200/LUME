@@ -1,0 +1,15 @@
+# Build output
+**/bin/
+**/obj/
+
+# Visual Studio workspace files
+.vs/
+*.user
+*.suo
+
+# Rider/VS Code local settings
+.idea/
+.vscode/
+
+# Logs
+*.log
