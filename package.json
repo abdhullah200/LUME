@@ -1,0 +1,13 @@
+{
+  "name": "lume-tests",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Test suite for Lume front-end assets (JS behaviour, Razor markup, styles and static assets).",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  }
+}
