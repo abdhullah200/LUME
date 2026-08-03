@@ -8334,3 +8334,44 @@ h1, h2, h3, h4, h5, h6 {
 .peer:checked ~ .peer-checked\:\[\&_\.active\]\:block .active {
     display: block;
 }
+
+body {
+    color: rgb(75 85 99 / var(--tw-text-opacity));
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        color: rgb(255 255 255 / var(--tw-text-opacity)); 
+    }
+}
+
+.uk-dropdown {
+    background-color: rgb(255 255 255 / var(--tw-bg-opacity)); 
+}
+
+@media (prefers-color-scheme: dark) {
+    .uk-dropdown {
+        background-color: rgb(30 41 59 / var(--tw-bg-opacity)); 
+        border-color: rgb(51 65 85 / 0.4);
+    }
+}
+
+.uk-dropdown nav {
+    color: rgb(51 65 85 / var(--tw-text-opacity));
+}
+
+@media (prefers-color-scheme: dark) {
+    .uk-dropdown nav {
+        color: rgb(255 255 255); 
+    }
+}
+
+.uk-dropdown nav {
+    color: rgb(51 65 85 / var(--tw-text-opacity));
+}
+
+@media (prefers-color-scheme: dark) {
+    .uk-dropdown nav {
+        color: rgb(255 255 255); 
+    }
+}
