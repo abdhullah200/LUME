@@ -1,48 +1,38 @@
 ﻿<div class="hidden lg-p-20" id="create-status" uk-modal="">
-	<div class="uk-modal-dialog tt relative overflow-hidden mx-auto bg-white shadow-xl rounded-lg md:w-[520px] w-full">
-		<div class="text-center py-4 border-b mb-0">
-			<h2 class="text-sm font-medium text-black">Create Status</h2>
-			<button type="button" class="button-icon absolute top-0 right-0 m-2.5 uk-modal-close">
-				<svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-					 stroke="#000000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-					<line x1="18" y1="6" x2="6" y2="18"></line>
-					<line x1="6" y1="6" x2="18" y2="18"></line>
-				</svg>
-			</button>
-		</div>
+    <div class="uk-modal-dialog tt relative overflow-hidden mx-auto bg-white shadow-xl rounded-lg md:w-[520px] w-[92%] max-h-[90vh] overflow-y-auto">
+        <div class="text-center py-4 border-b mb-0">
+            <h2 class="text-sm font-medium text-black">Create Status</h2>
+            <button type="button" class="button-icon absolute top-0 right-0 m-2.5 uk-modal-close">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                     stroke="#000000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
 
-		<form>
-			<div class="space-y-5 mt-3 p-2">
-<textarea class="w-full !text-black placeholder:!text-black !bg-white !border-transparent focus:!border-transparent focus:!ring-transparent !font-normal !text-xl"
-		  name="content"
-		  rows="2"
-		  placeholder="What do you have in mind?"></textarea>
-			</div>
-
-			<div class="flex items-center gap-2 text-sm py-2 px-4 font-medium flex-wrap">
-				<input id="imageUpload" type="file" class="hidden" name="uploadedContent" accept="image/png, image/jpeg"/>
-
-				<div class="flex items-center gap-2 text-sm py-2 px-4 font-medium flex-wrap">
-					<input id="imageUpload" type="file" class="hidden" name="uploadedContent" accept="image/png, image/jpeg" />
-					<div id="imagePreviewContainer" class="hidden">
-						<img id="imagePreview" src="#" class="w-full h-auto rounded" />
-					</div>
-
-					<button type="button" id="imageUploadBtn" class="flex items-center gap-1.5 bg-sky-50 text-sky-600 rounded-full py-1 px-2 border-2 border-sky-100">
-						<ion-icon name="image-outline" class="text-base"></ion-icon>
-						<span>Image</span>
-					</button>
-				</div>
-
-			</div>
-
-			<div class="p-5 flex justify-between items-center">
-				<div class="flex items-center gap-2">
-					<button type="submit" class="bg-sky-500 text-white rounded-full py-1 px-4">Create</button>
-				</div>
-			</div>
-
-		</form>
-
-	</div>
+        <form>
+            <div class="space-y-5 mt-3 p-2">
+                <textarea class="w-full !text-black placeholder:!text-black !bg-white !border-transparent focus:!border-transparent focus:!ring-transparent !font-normal text-lg sm:!text-xl"
+                          name="content"
+                          rows="2"
+                          placeholder="What do you have in mind?"></textarea>
+            </div>
+            <div class="flex items-center gap-2 text-sm py-2 px-4 font-medium flex-wrap">
+                <input id="statusImageUpload" type="file" class="sr-only" name="uploadedContent" accept="image/png, image/jpeg" />
+                <div id="imagePreviewContainer" class="hidden">
+                    <img id="imagePreview" src="#" class="w-full h-auto rounded" />
+                </div>
+                <button type="button" id="imageUploadBtn" class="flex items-center gap-1.5 bg-sky-50 text-sky-600 rounded-full py-1 px-2 border-2 border-sky-100">
+                    <ion-icon name="image-outline" class="text-base"></ion-icon>
+                    <span>Image</span>
+                </button>
+            </div>
+            <div class="p-5 flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <button type="submit" class="bg-sky-500 text-white rounded-full py-1 px-4">Create</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
