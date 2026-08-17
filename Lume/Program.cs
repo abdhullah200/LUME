@@ -1,7 +1,15 @@
+
+using Lume.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+//Database Configutration
+var dbConnectionString = builder.Configuration.GetConnectionString("Defualt");
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(dbConnectionString));
 
 var app = builder.Build();
 
