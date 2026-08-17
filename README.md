@@ -123,7 +123,7 @@ Visit **https://localhost:5001** (or the port shown in your terminal) to view th
 
 ## 🗺️ Roadmap
 
-- [ ] Feed page (posts) Razor + Tailwind + UIkit
+- [x] Feed page (posts) Razor + Tailwind + UIkit
 - [ ] Stories bar + full-screen story viewer
 - [ ] Reels vertical feed
 - [ ] Upload flow (posts, stories, reels)
