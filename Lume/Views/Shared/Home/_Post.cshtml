@@ -1,0 +1,104 @@
+﻿@model Post
+
+<div class="bg-white rounded-xl shadow-sm text-sm font-medium border1">
+
+	@* Post heading *@
+	<div class="flex gap-3 sm:p-4 p-2.5 font-medium">
+		<a>
+			<img src="@(string.IsNullOrEmpty(Model.User.ProfilePictureUrl) ? "~/images/avatar/user.png" : Model.User.ProfilePictureUrl)" class="w-9 h-9 rounded-full">
+		</a>
+		<div class="flex-1">
+			<a>
+				<h4 class="text-black">
+					@Model.User.fullName
+				</h4>
+				<div class="text-xs text-gray-500">
+					@Model.DateCreated.ToString("dd/MM/yyyy HH:mm")
+				</div>
+			</a>
+		</div>
+		<div class="-mr-1">
+			<button type="button" class="button-icon w-8 h-8 text-gray-500">
+				<ion-icon class="text-xl" name="ellipsis-horizontal"></ion-icon>
+			</button>
+			<div class="w-[245px] !bg-white dark:!bg-white !border-slate-200 dark:!border-slate-200"
+				 uk-dropdown="pos: bottom-right; animation: uk-animation-scale-up uk-transform-origin-top-right; animate-out:true; mode:click">
+				<form>
+					<button type="submit" class="!hover:bg-red-50 icon-link text-slate-700 dark:!text-slate-700">
+						<ion-icon class="text-xl shrink-0" name="flag-outline"></ion-icon> Report
+					</button>
+				</form>
+				<hr />
+				<form>
+					<button type="submit" class="!hover:bg-red-50 icon-link text-slate-700 dark:!text-slate-700">
+						<ion-icon class="text-xl" name="lock-closed-outline"></ion-icon> Set as Private
+					</button>
+				</form>
+				<hr />
+				<form>
+					<button type="submit" class="!hover:bg-red-50 icon-link text-slate-700 dark:!text-slate-700">
+						<ion-icon class="text-xl" name="trash-bin-outline"></ion-icon> Delete Post
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	@* Post content *@
+	<a>
+		<div class="sm:px-4 p-2.5 pt-0 w-full ">
+			<p class="font-normal text-black">
+				@Model.Content
+			</p>
+		</div>
+	</a>
+
+	@if (!string.IsNullOrEmpty(Model.ImageUrl))
+	{
+		<a>
+			<div class="relative w-full lg:h-96 h-full sm:px-4">
+				<img src="@Model.ImageUrl" class="sm:rounded-lg w-full h-full object-cover" />
+			</div>
+		</a>
+
+	}
+
+	@* Icons *@
+	<div class="sm:p-4 p-2.5 flex items-center gap-4 text-xs font-semibold">
+		<div>
+			<div class="flex items-center gap-2.5">
+				<a class="button-icon text-red-500 bg-red-100">
+					<ion-icon class="text-lg" name="heart"></ion-icon>
+				</a>
+				<a href="#" class="text-gray-700 font-semibold">24</a>
+			</div>
+		</div>
+
+		<div class="flex items-center gap-3">
+			<a class="button-icon text-gray-700">
+				<ion-icon class="text-lg" name="chatbubble-ellipses-outline"></ion-icon>
+			</a>
+			<a href="#" class="text-gray-700">12</a>
+		</div>
+
+		<div class="ml-auto"></div>
+
+		<div>
+			<a class="button-icon ml-auto text-gray-700">
+				<ion-icon class="text-lg" name="bookmark-outline"></ion-icon>
+			</a>
+		</div>
+	</div>
+
+	@* Add Comment Section *@
+	<div>
+		<div class="sm:px-4 sm:py-3 p-2.5 border-t border-gray-100 flex items-center gap-1">
+			<img src="~/images/avatar/user.png" class="w-8 h-8 rounded-full" />
+			<div class="flex-1 relative overflow-hidden h-10">
+				<textarea placeholder="Add a comment..." rows="1" class="w-full resize-none !bg-transparent px-4 py-2 text-gray-800 placeholder:!text-gray-600 focus:!bg-transparent focus:!ring-transparent"></textarea>
+			</div>
+			<button class="text-sm rounded-full py-1.5 px-3.5 bg-secondery text-black">Comment</button>
+		</div>
+	</div>
+</div>
