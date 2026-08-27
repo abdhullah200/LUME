@@ -28,8 +28,8 @@ namespace LumeData.Helpers
                     Content = "This is the content of my first post.",
                     ImageUrl="",
                     NumOfReports = 0,
-                    DateCreated = DateTime.Now,
-                    DateUpdated = DateTime.Now,
+                    DateCreated = DateTime.UtcNow,
+                    DateUpdated = DateTime.UtcNow,
                     UserId = newUser.Id
                 };
 
@@ -38,8 +38,8 @@ namespace LumeData.Helpers
                     Content = "This is the content of my second post.",
                     ImageUrl = "https://commons.wikimedia.org/wiki/File:Example_image.svg",
                     NumOfReports = 0,
-                    DateCreated = DateTime.Now,
-                    DateUpdated = DateTime.Now,
+                    DateCreated = DateTime.UtcNow,
+                    DateUpdated = DateTime.UtcNow,
                     UserId = newUser.Id
                 };
 
