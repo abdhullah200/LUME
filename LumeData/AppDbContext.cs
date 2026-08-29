@@ -29,6 +29,11 @@ namespace Lume.Data
         public DbSet<User> Users { get; set; }
 
         /// <summary>
+        /// Gets or sets the likes table.
+        /// </summary>
+        public DbSet<Like> Likes { get; set; }  
+
+        /// <summary>
         /// Configures the model relationships and constraints for the database context.
         /// </summary>
         /// <param name="modelBuilder">The model builder used to configure the entity models.</param>
@@ -39,6 +44,23 @@ namespace Lume.Data
                 .HasMany(u => u.Posts)
                 .WithOne(p => p.User)
                 .HasForeignKey(p => p.UserId);
+
+            modelBuilder.Entity<Like>()
+                .HasKey(l => new { l.postId, l.userId });
+
+            modelBuilder.Entity<Like>()
+                .HasOne(l => l.post)
+                .WithMany(p => p.likes)
+                .HasForeignKey(l => l.postId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Like>()
+                .HasOne(l => l.user)
+                .WithMany(u => u.Likes)
+                .HasForeignKey(l => l.userId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
