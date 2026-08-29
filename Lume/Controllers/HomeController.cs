@@ -1,6 +1,7 @@
 using Lume.Data;
 using Lume.Data.Models;
 using Lume.ViewModels.Home;
+using LumeData.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -34,6 +35,7 @@ namespace Lume.Controllers
         {
             var allPosts = await _context.Posts
                 .Include(n => n.User)
+                .Include(n => n.likes)
                 .OrderByDescending(n => n.DateCreated)
                 .ToListAsync();
 
@@ -94,6 +96,40 @@ namespace Lume.Controllers
             // Redirect to the Index action to display the updated list of posts
             return RedirectToAction("Index");
 
+        }
+
+        /// <summary>
+        /// Handles the toggling of a like for a post.
+        /// </summary>
+        /// <param name="postLike">The view model containing the data for the post like.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains an <see cref="IActionResult"/> that redirects to the Index action.</returns>
+        [HttpPost]
+        public async Task<IActionResult> TogglePostLike(PostLike postLike)
+        {
+            int loggedInUserId = 1;
+
+            // Check if the user has already liked the post
+            var like = await _context.Likes
+                .Where(l => l.postId == postLike.PostId && l.userId == loggedInUserId)
+                .FirstOrDefaultAsync();
+
+            if(like !=null)
+            {
+                _context.Likes.Remove(like);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                var newLike = new Like()
+                {
+                    postId = postLike.PostId,
+                    userId = loggedInUserId
+                };
+                await _context.Likes.AddAsync(newLike);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }
