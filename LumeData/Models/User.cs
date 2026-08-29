@@ -33,5 +33,10 @@ namespace LumeData.Models
         /// Gets or sets the collection of posts associated with the user.
         /// </summary>                   
         public ICollection<Post> Posts   { get; set; } = new List<Post>();
+
+        /// <summary>
+        /// Gets or sets the collection of likes associated with the user.
+        /// </summary>
+        public ICollection<Like> Likes   { get; set; } = new List<Like>();
     }
 }
