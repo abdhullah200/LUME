@@ -154,7 +154,7 @@ Visit **https://localhost:5001** (or the port shown in your terminal) to view th
 - [x] Create post flow with image upload
 - [x] Like/unlike toggle persisted to the database
 - [x] Sidebar, topbar, and trends/follower suggestions UI
-- [ ] Comments
+- [x] Comments
 - [ ] Stories backend (upload/story data persisted)
 - [ ] Authentication (replace hardcoded logged-in user)
 - [ ] Profile page
