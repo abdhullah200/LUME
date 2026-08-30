@@ -38,5 +38,7 @@ namespace LumeData.Models
         /// Gets or sets the collection of likes associated with the user.
         /// </summary>
         public ICollection<Like> Likes   { get; set; } = new List<Like>();
+
+        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
     }
 }

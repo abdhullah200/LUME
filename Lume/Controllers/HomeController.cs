@@ -36,6 +36,7 @@ namespace Lume.Controllers
             var allPosts = await _context.Posts
                 .Include(n => n.User)
                 .Include(n => n.likes)
+                .Include(n => n.comments).ThenInclude(c => c.User)
                 .OrderByDescending(n => n.DateCreated)
                 .ToListAsync();
 
@@ -130,6 +131,44 @@ namespace Lume.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        /// <summary>
+        /// Handles the addition of a comment to a post.
+        /// </summary>
+        /// <param name="postComment">The view model containing the data for the post comment.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains an <see cref="IActionResult"/> that redirects to the Index action.</returns>
+        [HttpPost]
+        public async Task<IActionResult> AddPostComment(PostComment postComment )
+        {
+            int loggedInUserId = 1;
+
+            var newComment = new Comment()
+            {
+                postId      = postComment.PostId,
+                userId      = loggedInUserId,
+                Content     = postComment.Content,
+                DateCreated = DateTime.UtcNow,
+                DateUpdated = DateTime.UtcNow
+            };
+            await _context.Comments.AddAsync(newComment);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemovePostComment(RemoveComment removeComment)
+        {
+            var commentDb = await _context.Comments.FirstOrDefaultAsync(c => c.id == removeComment.CommentId);
+
+            if(commentDb != null)
+            {
+                _context.Comments.Remove(commentDb);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("Index");
+
         }
     }
 }
