@@ -55,5 +55,7 @@ namespace Lume.Data.Models
         /// Gets or sets the collection of likes associated with the post.
         /// </summary>
         public ICollection<Like> likes { get; set; } = new List<Like>();
-        }
+
+        public ICollection<Comment> comments { get; set; } = new List<Comment>();
+    }
 }
