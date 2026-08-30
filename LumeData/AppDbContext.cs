@@ -31,7 +31,12 @@ namespace Lume.Data
         /// <summary>
         /// Gets or sets the likes table.
         /// </summary>
-        public DbSet<Like> Likes { get; set; }  
+        public DbSet<Like> Likes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the comments table.
+        /// </summary>
+        public DbSet<Comment> Comments { get; set; }
 
         /// <summary>
         /// Configures the model relationships and constraints for the database context.
@@ -57,6 +62,19 @@ namespace Lume.Data
             modelBuilder.Entity<Like>()
                 .HasOne(l => l.user)
                 .WithMany(u => u.Likes)
+                .HasForeignKey(l => l.userId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Comments
+            modelBuilder.Entity<Comment>()
+                .HasOne(l => l.post)
+                .WithMany(p => p.comments)
+                .HasForeignKey(l => l.postId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Comment>()
+                .HasOne(l => l.User)
+                .WithMany(u => u.Comments)
                 .HasForeignKey(l => l.userId)
                 .OnDelete(DeleteBehavior.Restrict);
 

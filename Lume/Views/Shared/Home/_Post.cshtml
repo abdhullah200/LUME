@@ -94,7 +94,7 @@
 			<a class="button-icon text-gray-700">
 				<ion-icon class="text-lg" name="chatbubble-ellipses-outline"></ion-icon>
 			</a>
-			<a href="#" class="text-gray-700">12</a>
+			<a href="#" class="text-gray-700">@Model.comments.Count</a>
 		</div>
 
 		<div class="ml-auto"></div>
@@ -108,12 +108,72 @@
 
 	@* Add Comment Section *@
 	<div>
-		<div class="sm:px-4 sm:py-3 p-2.5 border-t border-gray-100 flex items-center gap-1">
-			<img src="~/images/avatar/user.png" class="w-8 h-8 rounded-full" />
-			<div class="flex-1 relative overflow-hidden h-10">
-				<textarea placeholder="Add a comment..." rows="1" class="w-full resize-none !bg-transparent px-4 py-2 text-gray-800 placeholder:!text-gray-600 focus:!bg-transparent focus:!ring-transparent"></textarea>
-			</div>
-			<button class="text-sm rounded-full py-1.5 px-3.5 bg-secondery text-black">Comment</button>
+		<div class="p-2.5 border-t border-gray-100 font-normal space-y-3 relative">
+
+			@foreach(var comment in Model.comments.OrderByDescending(n=> n.DateCreated).Take(3))
+			{
+				TimeSpan commenttimeSpanSincePosted = DateTime.UtcNow.Subtract(comment.DateCreated);
+
+				string commentdisplayTime = commenttimeSpanSincePosted switch
+				{
+					var t when t.TotalDays >= 1 => $"{(int)t.TotalDays}d ago",
+					var t when t.TotalHours >= 1 => $"{(int)t.TotalHours}h ago",
+					var t when t.TotalMinutes >= 1 => $"{(int)t.TotalMinutes}m ago",
+					_ => "Just now"
+				};
+
+				<div class="flex gap-3">
+					<a>
+						<img src="@(comment.User.ProfilePictureUrl ?? "~/images/avatar/user.png")" class=" w-6 h-6 mt-1 rounded-full">
+					</a>
+					<div class="flex-1">
+						<div class="flex items-center justify-between">
+							<a class="text-black font-medium">
+								@comment.User.fullName
+							</a>
+							<small class="text-gray-500 text-xs">
+								@commentdisplayTime
+							</small>
+						</div>
+						<div class="flex items-center justify-between">
+							<p class="mt-0.5 text-gray-800">
+								@comment.Content
+							</p>
+							<form asp-controller="Home" asp-action="RemovePostComment">
+								<input type="hidden" name="commentId" value="@comment.id" />
+								<button type="submit" class="text-red-500 text-xs ml-2" title="Remove Post Comment">
+									<ion-icon name="trash-outline">
+									</ion-icon>
+								</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			}
+
+			@if(Model.comments.Count >= 3)
+			{
+				<div class="p-1.5 ">
+					<a class="text-gray-800">
+						Show All Comments
+					</a>
+				</div>
+			}
+
 		</div>
+		<form asp-controller="Home" asp-action="AddPostComment">
+			<div class="sm:px-4 sm:py-3 p-2.5 border-t border-gray-100 flex items-center gap-1">
+				<img src="@(string.IsNullOrEmpty(Model.User.ProfilePictureUrl) ? "~/images/avatar/user.png" : Model.User.ProfilePictureUrl)" class="w-8 h-8 rounded-full" />
+
+				<input type="hidden" name="PostId" value="@Model.Id" />
+				<div class="flex-1 relative overflow-hidden h-10">
+					<textarea name="Content" placeholder="Add a comment..." rows="1"
+							  style="color:#1f2937 !important;"
+							  class="w-full resize-none !bg-transparent px-4 py-2 text-gray-800 placeholder:!text-gray-600 focus:!bg-transparent focus:!ring-transparent"></textarea>
+				</div>
+				<button type="submit" class="text-sm rounded-full py-1.5 px-3.5 bg-secondery text-black">Comment</button>
+			</div>
+		</form>
+
 	</div>
 </div>
