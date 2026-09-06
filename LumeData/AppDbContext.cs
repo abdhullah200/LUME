@@ -21,22 +21,27 @@ namespace Lume.Data
         /// <summary>
         /// Gets or sets the posts table.
         /// </summary>
-        public DbSet<Post> Posts { get; set; }
+        public DbSet<Post> Posts         { get; set; }
 
         /// <summary>
         /// Gets or sets the users table.
         /// </summary>
-        public DbSet<User> Users { get; set; }
+        public DbSet<User> Users         { get; set; }
 
         /// <summary>
         /// Gets or sets the likes table.
         /// </summary>
-        public DbSet<Like> Likes { get; set; }
-
-        /// <summary>
+        public DbSet<Like> Likes         { get; set; }
+                                       
+        /// <summary>                  
         /// Gets or sets the comments table.
         /// </summary>
-        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Comment> Comments   { get; set; }
+
+        /// <summary>
+        /// Gets or sets the favorites table.
+        /// </summary>
+        public DbSet<Favorite> Favorites { get; set; }
 
         /// <summary>
         /// Configures the model relationships and constraints for the database context.
@@ -76,6 +81,22 @@ namespace Lume.Data
                 .HasOne(l => l.User)
                 .WithMany(u => u.Comments)
                 .HasForeignKey(l => l.userId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Favorites
+            modelBuilder.Entity<Favorite>()
+                .HasKey(f => new { f.postId, f.userId });
+
+            modelBuilder.Entity<Favorite>()
+                .HasOne(f => f.post)
+                .WithMany(p => p.favorites)
+                .HasForeignKey(f => f.postId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Favorite>()
+                .HasOne(f => f.user)
+                .WithMany(u => u.Favorites)
+                .HasForeignKey(f => f.userId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(modelBuilder);

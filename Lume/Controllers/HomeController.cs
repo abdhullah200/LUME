@@ -14,7 +14,7 @@ namespace Lume.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly AppDbContext _context;
+        private readonly AppDbContext            _context;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HomeController"/> class with the specified logger and database context.
@@ -23,7 +23,7 @@ namespace Lume.Controllers
         /// <param name="context">The database context to be used for data access.</param>
         public HomeController(ILogger<HomeController> logger, AppDbContext context)
         {
-            _logger = logger;
+            _logger  = logger;
             _context = context;
         }
 
@@ -36,6 +36,7 @@ namespace Lume.Controllers
             var allPosts = await _context.Posts
                 .Include(n => n.User)
                 .Include(n => n.likes)
+                .Include(n => n.favorites)
                 .Include(n => n.comments).ThenInclude(c => c.User)
                 .OrderByDescending(n => n.DateCreated)
                 .ToListAsync();
@@ -132,6 +133,64 @@ namespace Lume.Controllers
 
             return RedirectToAction("Index");
         }
+
+        /// <summary>
+        /// Handles the toggling of a favorite for a post.
+        /// </summary>
+        /// <param name="favoritePosts">The view model containing the data for the favorite post.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains an <see cref="IActionResult"/> that redirects to the Index action.</returns>
+        [HttpPost]
+        public async Task<IActionResult> ToggleFavorite(FavoritePosts favoritePosts)
+        {
+            int loggedInUserId = 1;
+
+            // Check if the user has favorite liked the post
+            var favorite = await _context.Favorites
+                .Where(l => l.postId == favoritePosts.PostId && l.userId == loggedInUserId)
+                .FirstOrDefaultAsync();
+
+            if (favorite != null)
+            {
+                _context.Favorites.Remove(favorite);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                var newfavorite = new Favorite()
+                {
+                    postId = favoritePosts.PostId,
+                    userId = loggedInUserId
+                };
+                await _context.Favorites.AddAsync(newfavorite);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        /// <summary>
+        /// Handles the toggling of the visibility of a post (private/public).
+        /// </summary>
+        /// <param name="postVisibility">The view model containing the data for the post visibility.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains an <see cref="IActionResult"/> that redirects to the Index action.</returns>
+        [HttpPost]
+        public async Task<IActionResult> TogglePostVisiblity(PostVisibility postVisibility)
+        {
+            int loggedInUserId = 1;
+
+            var post = await _context.Posts
+                .FirstOrDefaultAsync(l => l.Id == postVisibility.PostId && l.UserId == loggedInUserId);
+
+            if (post != null)
+            {
+                post.IsPrivate = !post.IsPrivate;
+                _context.Posts.Update(post);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("Index");
+        }
+
 
         /// <summary>
         /// Handles the addition of a comment to a post.

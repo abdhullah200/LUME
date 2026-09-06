@@ -52,10 +52,23 @@ namespace Lume.Data.Models
         public User User               { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the post is private.
+        /// </summary>
+        public bool IsPrivate          { get; set; }
+
+        /// <summary>
         /// Gets or sets the collection of likes associated with the post.
         /// </summary>
-        public ICollection<Like> likes { get; set; } = new List<Like>();
+        public ICollection<Like> likes         { get; set; } = new List<Like>();
+                                               
+        /// <summary>                          
+        /// Gets or sets the collection of comments associated with the post.
+        /// </summary>
+        public ICollection<Comment> comments   { get; set; } = new List<Comment>();
 
-        public ICollection<Comment> comments { get; set; } = new List<Comment>();
+        /// <summary>
+        /// Gets or sets the collection of favorites associated with the post.
+        /// </summary>
+        public ICollection<Favorite> favorites { get; set; } = new List<Favorite>();
     }
 }
