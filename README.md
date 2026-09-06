@@ -59,7 +59,7 @@ Stories and reels are still frontend-only UI (mock data) while the posts feed is
 
 | Area | Status |
 |------|--------|
-| **Feed (Posts + Likes)** — EF Core, SQL Server, real CRUD | ✅ Wired up |
+| **Feed (Posts + Likes, Save Posts)** — EF Core, SQL Server, real CRUD | ✅ Wired up |
 | **Layout & Navigation** (Sidebar, Topbar, Feed shell) | ✅ In place |
 | **Comments** | ✅ Wired up |
 | **Stories** (Razor views, Tailwind, UIkit, mock data) | 🚧 Frontend only |
