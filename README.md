@@ -157,7 +157,7 @@ Visit **https://localhost:5001** (or the port shown in your terminal) to view th
 - [x] Comments
 - [ ] Stories backend (upload/story data persisted)
 - [ ] Authentication (replace hardcoded logged-in user)
-- [ ] Profile page
+- [x] Profile page
 - [ ] Cloud media storage for uploads
 
 ---
