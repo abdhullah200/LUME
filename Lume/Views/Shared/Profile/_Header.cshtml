@@ -1,0 +1,52 @@
+@model Lume.ViewModels.Profile.ProfileVM
+
+@* ===== Header: photo, name, stats, bio, actions - centered, larger ===== *@
+<div class="flex flex-col items-center text-center py-10 border-b border-slate-200 mb-4">
+
+	<img src="@Model.ProfilePictureUrl" class="w-40 h-40 sm:w-48 sm:h-48 rounded-full object-cover shadow shrink-0 mb-5" />
+
+	<h1 class="text-2xl sm:text-3xl font-semibold text-black mb-4">@Model.FullName</h1>
+
+	<div class="flex gap-3 mb-5">
+		@if (Model.IsOwnProfile)
+		{
+			@* Not wired to a real endpoint yet - UI only *@
+			<a class="px-5 py-2 text-base font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 text-black cursor-pointer">
+				Edit profile
+			</a>
+			<button type="button" data-share-profile-btn
+					class="px-5 py-2 text-base font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 text-black">
+				Share profile
+			</button>
+		}
+		else
+		{
+			<button type="button" class="px-5 py-2 text-base font-semibold rounded-lg bg-blue-600 hover:bg-blue-700 text-white">
+				Follow
+			</button>
+			<button type="button" data-share-profile-btn
+					class="px-5 py-2 text-base font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 text-black">
+				Share profile
+			</button>
+		}
+	</div>
+
+	@* Stats - follower/following are placeholders (0) until Follow is a real entity *@
+	<ul class="flex justify-center gap-10 mb-4 text-base text-black">
+		<li><span class="font-semibold text-lg">@Model.PostCount</span> posts</li>
+		<li><span class="font-semibold text-lg">@Model.FollowerCount</span> followers</li>
+		<li><span class="font-semibold text-lg">@Model.FollowingCount</span> following</li>
+	</ul>
+
+	@* Bio - placeholder ("") until User has a Bio column *@
+	<div class="text-base text-black min-h-[1.5rem]">
+		@if (!string.IsNullOrWhiteSpace(Model.Bio))
+		{
+			<p class="whitespace-pre-line">@Model.Bio</p>
+		}
+		else if (Model.IsOwnProfile)
+		{
+			<p class="text-slate-400">+ Add a bio</p>
+		}
+	</div>
+</div>

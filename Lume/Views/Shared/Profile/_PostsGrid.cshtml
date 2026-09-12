@@ -1,0 +1,101 @@
+@model Lume.ViewModels.Profile.ProfileVM
+
+@{
+	var photoPosts = Model.Posts.Where(p => !string.IsNullOrEmpty(p.ImageUrl)).ToList();
+	var textPosts  = Model.Posts.Where(p => string.IsNullOrEmpty(p.ImageUrl)).ToList();
+}
+
+@* ===== Tab bar: Photo posts vs Text posts ===== *@
+<ul uk-tab class="flex justify-center gap-12 mb-4 !border-b-0">
+	<li class="uk-active">
+		<a class="!flex items-center gap-1.5 py-3 text-xs font-semibold tracking-wide uppercase !text-black">
+			<ion-icon name="grid-outline"></ion-icon> Posts
+		</a>
+	</li>
+	<li>
+		<a class="!flex items-center gap-1.5 py-3 text-xs font-semibold tracking-wide uppercase !text-black">
+			<ion-icon name="chatbox-ellipses-outline"></ion-icon> Text
+		</a>
+	</li>
+</ul>
+
+<ul class="uk-switcher">
+
+	@* ===== Photo posts - same 3-column square grid as before ===== *@
+	<li>
+		@if (photoPosts.Count == 0)
+		{
+			<div class="text-center py-20 text-slate-500">
+				<p class="text-lg font-semibold text-black">No photo posts yet</p>
+			</div>
+		}
+		else
+		{
+			<div class="grid grid-cols-3 gap-1 sm:gap-2">
+				@foreach (var post in photoPosts)
+				{
+					<div class="relative block aspect-square group overflow-hidden bg-slate-100">
+						<img src="@post.ImageUrl" class="w-full h-full object-cover" />
+
+						<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center gap-6 text-white text-sm font-semibold transition-opacity">
+							<span class="flex items-center gap-1.5">
+								<ion-icon name="heart"></ion-icon> @post.likes.Count
+							</span>
+							<span class="flex items-center gap-1.5">
+								<ion-icon name="chatbubble"></ion-icon> @post.comments.Count
+							</span>
+						</div>
+					</div>
+				}
+			</div>
+		}
+	</li>
+
+	@* ===== Text posts - X/Twitter-style feed so the content is actually readable ===== *@
+	<li>
+		@if (textPosts.Count == 0)
+		{
+			<div class="text-center py-20 text-slate-500">
+				<p class="text-lg font-semibold text-black">No text posts yet</p>
+			</div>
+		}
+		else
+		{
+			<div class="max-w-xl mx-auto space-y-3">
+				@foreach (var post in textPosts.OrderByDescending(p => p.DateCreated))
+				{
+					TimeSpan timeSpanSincePosted = DateTime.UtcNow.Subtract(post.DateCreated);
+					string displayTime = timeSpanSincePosted switch
+					{
+						var t when t.TotalDays >= 1 => $"{(int)t.TotalDays}d",
+						var t when t.TotalHours >= 1 => $"{(int)t.TotalHours}h",
+						var t when t.TotalMinutes >= 1 => $"{(int)t.TotalMinutes}m",
+						_ => "now"
+					};
+
+					<div class="bg-white rounded-xl shadow-sm border1 p-4 text-left">
+						<div class="flex gap-3 items-center mb-2">
+							<img src="@Model.ProfilePictureUrl" class="w-10 h-10 rounded-full object-cover shrink-0" />
+							<div class="flex items-center gap-1.5">
+								<span class="font-semibold text-black">@Model.FullName</span>
+								<span class="text-slate-400 text-sm">· @displayTime</span>
+							</div>
+						</div>
+
+						<p class="text-black whitespace-pre-line">@post.Content</p>
+
+						<div class="flex items-center gap-6 mt-3 text-sm text-slate-600">
+							<span class="flex items-center gap-1.5">
+								<ion-icon name="heart-outline"></ion-icon> @post.likes.Count
+							</span>
+							<span class="flex items-center gap-1.5">
+								<ion-icon name="chatbubble-ellipses-outline"></ion-icon> @post.comments.Count
+							</span>
+						</div>
+					</div>
+				}
+			</div>
+		}
+	</li>
+
+</ul>
