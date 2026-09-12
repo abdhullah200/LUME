@@ -1,0 +1,23 @@
+﻿@model Lume.ViewModels.Profile.ProfileVM
+
+<main id="site__main" class="2xl:ms-[--w-side] xl:ms-[--w-side-sm] p-2.5 pl-12 h-[calc(100vh-var(--m-top))] mt-[--m-top]">
+	<div class="max-w-[935px] mx-auto">
+		<partial name="Profile/_Header" model="Model" />
+		<partial name="Profile/_StoryHighlights" model="Model" />
+		<partial name="Profile/_PostsGrid" model="Model" />
+	</div>
+</main>
+
+@section Scripts {
+	<script>
+		document.querySelectorAll('[data-share-profile-btn]').forEach(function (btn) {
+			btn.addEventListener('click', function () {
+				var url = window.location.href;
+				if (navigator.clipboard) {
+					navigator.clipboard.writeText(url);
+				}
+				UIkit.notification({ message: 'Profile link copied', pos: 'top-center' });
+			});
+		});
+	</script>
+}

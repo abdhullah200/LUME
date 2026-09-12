@@ -1,0 +1,24 @@
+@model Lume.ViewModels.Profile.ProfileVM
+
+@* ===== Story highlights - placeholder list until StoryHighlight is a real entity ===== *@
+<div class="flex gap-6 overflow-x-auto pb-4 mb-4 border-b border-slate-200">
+	@if (Model.IsOwnProfile)
+	{
+		<div class="flex flex-col items-center gap-1 shrink-0 cursor-pointer">
+			<div class="w-16 h-16 rounded-full border-2 border-dashed border-slate-300 grid place-items-center bg-slate-50">
+				<ion-icon name="add-outline" class="text-2xl text-slate-400"></ion-icon>
+			</div>
+			<span class="text-xs text-black">New</span>
+		</div>
+	}
+
+	@foreach (var highlight in Model.StoryHighlights)
+	{
+		<div class="flex flex-col items-center gap-1 shrink-0 cursor-pointer">
+			<div class="w-16 h-16 rounded-full p-0.5 border border-slate-300">
+				<img src="@highlight.CoverImageUrl" class="w-full h-full rounded-full object-cover" />
+			</div>
+			<span class="text-xs text-black truncate w-16 text-center">@highlight.Title</span>
+		</div>
+	}
+</div>
