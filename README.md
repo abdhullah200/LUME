@@ -1,18 +1,19 @@
 # LUME
+# LUME
 
 <div align="center">
 
-![ASP.NET](https://img.shields.io/badge/ASP.NET-MVC-512BD4?logo=dotnet)
+![ASP.NET](https://img.shields.io/badge/ASP.NET-Core%20MVC-512BD4?logo=dotnet)
 ![C#](https://img.shields.io/badge/C%23-.NET%208-239120?logo=c-sharp)
-![EF Core](https://img.shields.io/badge/EF%20Core-8-512BD4?logo=dotnet)
+![EF Core](https://img.shields.io/badge/EF%20Core-8.0.21-512BD4?logo=dotnet)
 ![SQL Server](https://img.shields.io/badge/SQL%20Server-LocalDB-CC2927?logo=microsoft-sql-server)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3-38B2AC?logo=tailwind-css)
 ![UIkit](https://img.shields.io/badge/UIkit-3.25.19-2396F3)
-![Status](https://img.shields.io/badge/status-backend%20wired%20up-brightgreen)
+![Status](https://img.shields.io/badge/status-in%20development-orange)
 
-A social media web app for sharing moments through posts, stories, and reels, built as an ASP.NET Core MVC app with a real EF Core + SQL Server backend now wired in behind the Razor/Tailwind/UIkit frontend.
+A social media web application for sharing posts and discovering visual content, built with ASP.NET Core MVC, Razor Views, Entity Framework Core, SQL Server, Tailwind CSS, and UIkit.
 
-• [Report Bug](https://github.com/abdhullah200/LUME/issues)
+• [Report a Bug](https://github.com/abdhullah200/LUME/issues)
 
 </div>
 
@@ -20,52 +21,61 @@ A social media web app for sharing moments through posts, stories, and reels, bu
 
 ## 🎯 About LUME
 
-**LUME** is a social media platform focused on visual sharing posts, stories, and reels. It started as a frontend-first mock-data MVP and has since grown a real data layer: posts and likes are now backed by SQL Server via EF Core, with a dedicated **LumeData** project holding the models, `DbContext`, and migrations.
+**LUME** is a social media experience centered around posts, comments, likes, saved posts, profiles, and visual content. The application began as a frontend-first interface and now includes a SQL Server data layer for the main feed and profile functionality.
 
-Stories and reels are still frontend-only UI (mock data) while the posts feed is now fully wired to the database.
-
----
-
-## ✨ Core Features
-
-### 📸 Posts (backend-wired)
-- Feed reads live post data from SQL Server, ordered by most recent
-- Create post with optional image upload (saved to `wwwroot/images/Uploaded`)
-- Like/unlike toggling persisted via the `Likes` table
-- Relative post timestamps ("Just now", "5m ago", "2h ago", "3d ago")
-- Post options menu (Report / Set as Private / Delete Post — UI in place)
-
-### 🟣 Stories (frontend UI)
-- Story ring/avatar bar at the top of the feed
-- Story creation modal
-- Full-screen story viewer/upload flow — UI only, mock data for now
-
-### 🎬 Reels (planned)
-- Vertical, full-screen reel feed
-- Swipe/scroll-based navigation
-- Reel upload UI
-
-### 🧭 Navigation & Layout
-- Sidebar and topbar navigation partials
-- Follower suggestions and "Trends for You" sidebar sections
-
-### ⬆️ Upload
-- Create Status modal for posting content + images
-- Unified media preview before posting
+The current solution is still in development. Authentication screens, stories, and some post-menu actions are present as UI or placeholders, while the active user is currently represented by the seeded user with `UserId = 1`.
 
 ---
 
-## 🏗️ Project Status
+## ✨ Features
+
+### 📸 Posts and Feed
+- Loads posts from SQL Server through EF Core and orders them by creation date
+- Creates posts with text and optional image uploads
+- Stores uploaded images locally under `Lume/wwwroot/images/Uploaded`
+- Supports persistent like/unlike and save/unsave actions
+- Supports adding and removing comments
+- Supports toggling a user's post between public and private
+- Displays relative timestamps and post interaction counts
+
+### 👤 Profiles
+- Profile page for the seeded user or a requested user ID
+- Displays profile information and the user's posts
+- Shows post count and profile presentation components
+- Includes UI placeholders for future follower, following, bio, and story-highlight data
+
+### 🟣 Stories and 🎬 Reels
+- Story bar, story creation modal, and story presentation UI are included
+- Stories do not yet have database persistence or a complete backend flow
+- Reels are planned but are not implemented yet
+
+### 🧭 Layout and Navigation
+- Shared responsive layout with sidebar and topbar navigation
+- Follower suggestions and “Trends for You” sections
+- Reusable Razor partials for posts, profiles, navigation, and modals
+
+### 🔐 Authentication UI
+- Dedicated `LumeAuth` project with login and sign-up Razor Views
+- Form validation and local return-URL sanitization are included
+- Credential verification, password storage, identity, and authentication cookies are not connected yet
+
+---
+
+## 🏗️ Current Status
 
 | Area | Status |
 |------|--------|
-| **Feed (Posts + Likes, Save Posts)** — EF Core, SQL Server, real CRUD | ✅ Wired up |
-| **Layout & Navigation** (Sidebar, Topbar, Feed shell) | ✅ In place |
-| **Comments** | ✅ Wired up |
-| **Stories** (Razor views, Tailwind, UIkit, mock data) | 🚧 Frontend only |
-| **Reels** | ⏳ Not started |
-| **Authentication / real logged-in user** | ⏳ Not started (currently hardcoded `UserId = 1`) |
-| **Media storage (cloud)** | ⏳ Not started (local `wwwroot` uploads for now) |
+| **Posts and feed** — EF Core queries and create flow | ✅ Implemented |
+| **Likes and saved posts** — database-backed toggles | ✅ Implemented |
+| **Comments** — add and remove flows | ✅ Implemented |
+| **Post visibility** — public/private toggle | ✅ Implemented |
+| **Profile page** — profile and post grid | ✅ Implemented |
+| **Layout and navigation** | ✅ Implemented |
+| **Local image uploads** | ✅ Implemented |
+| **Stories** | 🚧 UI only |
+| **Authentication** | 🚧 UI only |
+| **Reels** | ⏳ Planned |
+| **Cloud media storage** | ⏳ Planned |
 
 ---
 
@@ -73,26 +83,30 @@ Stories and reels are still frontend-only UI (mock data) while the posts feed is
 
 ```
 LUME/
-├── Lume/                      # ASP.NET Core MVC web app
-│   ├── Controllers/           # HomeController (feed, create post, toggle like)
-│   ├── ViewModels/            # PostVM, PostLike, etc.
-│   ├── Views/
-│   │   ├── Home/              # Index (feed)
-│   │   └── Shared/
-│   │       ├── Home/          # _Post partial
-│   │       ├── Modals/        # _CreateStatus, _CreateStory
-│   │       ├── Navigation/    # _Sidebar, _Topbar
-│   │       └── SideBar/       # FollowerSuggestions, _TrendsForYouSection
-│   ├── wwwroot/                # Tailwind CSS, UIkit, static assets, uploaded images
-│   ├── Program.cs              # App startup, DB migration + seeding on boot
-│   └── appsettings.json        # Connection strings, logging config
-├── LumeData/                   # Data access layer (class library)
-│   ├── Models/                 # User, Post, Like entities
-│   ├── Helpers/                # DbInitializer (dev seed data)
-│   ├── Migrations/             # EF Core migrations
-│   └── AppDbContext.cs
-├── Lume.slnx                   # Solution file
-├── package.json                 # Frontend tooling (UIkit)
+├── Lume/                              # Main ASP.NET Core MVC application
+│   ├── Controllers/
+│   │   ├── HomeController.cs          # Feed, posts, likes, favorites, comments
+│   │   └── ProfileController.cs       # Profile and post grid
+│   ├── ViewModels/                    # Post, comment, favorite, visibility, and profile VMs
+│   ├── Views/                         # Razor Views and shared partials
+│   │   ├── Home/                      # Feed page
+│   │   ├── Profile/                   # Profile page
+│   │   └── Shared/                    # Layout, navigation, posts, profiles, and modals
+│   ├── wwwroot/                       # CSS, JavaScript, static assets, and local uploads
+│   ├── Migrations/                    # Application migration files
+│   ├── Program.cs                     # Service registration and HTTP pipeline
+│   └── appsettings.json               # Logging and database configuration
+├── LumeAuth/                          # Authentication UI project
+│   ├── Areas/Auth/Views/              # Login and sign-up Razor Views
+│   ├── Controllers/                   # AccountController
+│   └── ViewModels/                    # Login, sign-up, and validation models
+├── LumeData/                          # Shared data access class library
+│   ├── Models/                        # User, Post, Like, Comment, and Favorite entities
+│   ├── Helpers/                       # Development database seeding
+│   ├── Migrations/                    # EF Core schema migrations
+│   └── AppDbContext.cs                # Database context and relationships
+├── Lume.slnx                          # Solution file
+├── package.json                       # UIkit dependency
 └── README.md
 ```
 
@@ -101,64 +115,78 @@ LUME/
 ## 🚀 Quick Start
 
 ### Prerequisites
-- **.NET 8 SDK**
-- **SQL Server LocalDB** (or update the connection string for your own SQL Server instance)
-- **Node.js** (for Tailwind/UIkit tooling)
 
-### Installation Steps
+- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+- [SQL Server LocalDB](https://learn.microsoft.com/sql/database-engine/configure-windows/sql-server-express-localdb)
+- Node.js and npm are optional unless you need to manage the UIkit dependency
+
+### Run the application
 
 ```bash
-# 1. Clone the repository
+# Clone the repository
 git clone https://github.com/abdhullah200/LUME.git
 cd LUME
 
-# 2. Install frontend dependencies
-npm install
-
-# 3. Restore .NET dependencies
+# Restore .NET dependencies
 dotnet restore
 
-# 4. Run the app (migrations apply and dev seed data loads automatically on startup)
+# Optional: install the UIkit package declared in package.json
+npm install
+
+# Start the web application
 dotnet run --project Lume
 ```
 
-Visit **https://localhost:5001** (or the port shown in your terminal) to view the app.
+Open the HTTPS URL printed in the terminal. The port can vary by local launch configuration; do not assume it is always `https://localhost:5001`.
 
-> The default connection string in `appsettings.json` points at `(localdb)\MSSQLLocalDB`. Update `ConnectionStrings:Defualt` if you're using a different SQL Server instance.
+### Database setup
+
+On startup, the application:
+
+1. Reads the SQL Server connection string from `Lume/appsettings.json`.
+2. Applies pending EF Core migrations with `Database.MigrateAsync()`.
+3. Seeds an initial user and sample posts when the database is empty.
+
+The default connection string uses SQL Server LocalDB and the existing configuration key is `ConnectionStrings:Defualt`:
+
+```text
+Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=LumeDb;Integrated Security=True;Pooling=False;Encrypt=False;Trust Server Certificate=True
+```
+
+To use another SQL Server instance, replace the value of `ConnectionStrings:Defualt` in `Lume/appsettings.json` or override it with environment-specific configuration. The current seed logic is intended for development and should be reviewed before production use.
 
 ---
 
-## 📦 Tech Stack
+## 🧰 Tech Stack
 
-### Frontend
-| Technology | Purpose |
-|-----------|---------|
-| **ASP.NET Core Razor Views** | Server-rendered feed, stories, modals, navigation |
-| **Tailwind CSS** | Utility-first styling |
-| **UIkit** | Component library for UI elements (modals, sliders, dropdowns) |
-
-### Backend
-| Technology | Purpose |
-|-----------|---------|
-| **ASP.NET Core MVC (.NET 8)** | Controllers and application logic |
-| **Entity Framework Core 8** | ORM / data access (`LumeData` project) |
-| **SQL Server (LocalDB)** | Data storage for users, posts, likes |
-| **EF Core Migrations** | Schema management, applied automatically on startup |
+| Technology | Usage |
+|-----------|-------|
+| **ASP.NET Core MVC (.NET 8)** | Controllers, routing, and application pipeline |
+| **Razor Views** | Server-rendered feed, profiles, authentication UI, and shared partials |
+| **Entity Framework Core 8.0.21** | ORM and database access |
+| **SQL Server / LocalDB** | Application data store |
+| **EF Core Migrations** | Database schema management and startup migration application |
+| **Tailwind CSS** | Utility-first styling and generated application styles |
+| **UIkit 3.25.19** | UI components such as modals, dropdowns, and navigation elements |
+| **C#** | Application and data-layer implementation |
 
 ---
 
 ## 🗺️ Roadmap
 
-- [x] Feed page (posts) — Razor + Tailwind + UIkit
-- [x] EF Core + SQL Server backend for posts and likes
-- [x] Create post flow with image upload
-- [x] Like/unlike toggle persisted to the database
-- [x] Sidebar, topbar, and trends/follower suggestions UI
-- [x] Comments
-- [ ] Stories backend (upload/story data persisted)
-- [ ] Authentication (replace hardcoded logged-in user)
-- [x] Profile page
-- [ ] Cloud media storage for uploads
+- [x] Feed page with database-backed posts
+- [x] Create post flow with local image upload
+- [x] Persistent likes and saved posts
+- [x] Comments and comment removal
+- [x] Post visibility toggle
+- [x] Profile page and post grid
+- [x] Shared sidebar, topbar, trends, and follower suggestions UI
+- [ ] Connect login and sign-up to real authentication and password hashing
+- [ ] Replace hardcoded `UserId = 1` with the authenticated user
+- [ ] Persist stories and complete the story viewer flow
+- [ ] Build the reels feed and upload flow
+- [ ] Add production-ready media storage
+- [ ] Add authorization and ownership checks for all write operations
 
 ---
 
