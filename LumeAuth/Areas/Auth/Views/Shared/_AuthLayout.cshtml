@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <title>@ViewData["Title"] - Lume</title>
+    <link href="~/images/favicon.png" rel="icon" type="image/png" />
+    <link rel="stylesheet" href="~/_content/LumeAuth/css/auth.css" asp-append-version="true" />
+</head>
+<body class="auth-body">
+
+    <div class="auth-shell">
+
+        @* Brand panel (left, desktop only) *@
+        <partial name="Account/_BrandPanel" />
+
+        @* Form panel (right) *@
+        <main class="auth-main">
+            <div class="auth-card">
+                <a href="~/" class="auth-logo">
+                    <img src="~/images/logo.png" alt="Lume" />
+                </a>
+
+                @RenderBody()
+            </div>
+        </main>
+
+    </div>
+
+    @* Client side validation (shared with the host application) *@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+    @* Page scripts *@
+    <script src="~/_content/LumeAuth/js/auth.js" asp-append-version="true"></script>
+
+    @* Ion Icon *@
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

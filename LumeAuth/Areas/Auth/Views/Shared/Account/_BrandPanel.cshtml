@@ -1,0 +1,12 @@
+@{
+    string title = ViewData["BrandTitle"] as string ?? "Share your moments.";
+    string text  = ViewData["BrandText"]  as string ?? "Posts, stories and reels from the people you care about, all in one place.";
+}
+
+<aside class="auth-brand" aria-hidden="true">
+    <div class="auth-brand__inner">
+        <p class="auth-brand__mark">Lume</p>
+        <h2 class="auth-brand__title">@title</h2>
+        <p class="auth-brand__text">@text</p>
+    </div>
+</aside>
