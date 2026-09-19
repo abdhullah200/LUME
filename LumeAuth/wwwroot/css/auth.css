@@ -1,0 +1,327 @@
+/* ==========================================================================
+   LumeAuth: styles for the login and sign up pages.
+
+   Self contained on purpose. It does not load the host's template CSS
+   (style.css / tailwind.css), so the template's dark mode rules cannot leak
+   in and hide text. Colours match the app: pink to purple brand gradient
+   (same as the Create Story button) on a slate neutral palette.
+   ========================================================================== */
+
+:root {
+    --auth-pink:        #ec4899;
+    --auth-purple:      #a855f7;
+    --auth-ink:         #0f172a;
+    --auth-text:        #334155;
+    --auth-muted:       #64748b;
+    --auth-border:      #e2e8f0;
+    --auth-field:       #f8fafc;
+    --auth-page:        #f1f5f9;
+    --auth-surface:     #ffffff;
+    --auth-danger:      #dc2626;
+    --auth-danger-soft: #fef2f2;
+    --auth-info-soft:   #eff6ff;
+    color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+.auth-body {
+    min-height: 100vh;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--auth-text);
+    background: var(--auth-page);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Page shell ---------- */
+
+.auth-shell {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 960px) {
+    .auth-shell { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); }
+}
+
+/* ---------- Brand panel ---------- */
+
+.auth-brand {
+    display: none;
+    position: relative;
+    overflow: hidden;
+    padding: 56px;
+    color: #ffffff;
+    background: linear-gradient(135deg, var(--auth-pink) 0%, var(--auth-purple) 100%);
+    flex-direction: column;
+    justify-content: center;
+}
+
+.auth-brand::before,
+.auth-brand::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.auth-brand::before { width: 420px; height: 420px; top: -140px;  right: -120px; }
+.auth-brand::after  { width: 300px; height: 300px; bottom: -100px; left: -80px; }
+
+.auth-brand__inner { position: relative; z-index: 1; max-width: 440px; }
+
+.auth-brand__mark {
+    margin: 0 0 24px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    opacity: 0.9;
+}
+
+.auth-brand__title {
+    margin: 0 0 16px;
+    font-size: 40px;
+    line-height: 1.1;
+    font-weight: 800;
+}
+
+.auth-brand__text {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.55;
+    opacity: 0.92;
+}
+
+@media (min-width: 960px) {
+    .auth-brand { display: flex; }
+}
+
+/* ---------- Form panel ---------- */
+
+.auth-main {
+    display: grid;
+    place-items: center;
+    padding: 32px 20px;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 32px;
+    background: var(--auth-surface);
+    border: 1px solid var(--auth-border);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+@media (max-width: 480px) {
+    .auth-card { padding: 24px 20px; box-shadow: none; }
+}
+
+.auth-logo { display: inline-block; margin-bottom: 20px; }
+.auth-logo img { display: block; width: 96px; height: auto; }
+
+.auth-head h1 {
+    margin: 0 0 4px;
+    font-size: 24px;
+    line-height: 1.25;
+    font-weight: 700;
+    color: var(--auth-ink);
+}
+
+.auth-head p {
+    margin: 0 0 24px;
+    color: var(--auth-muted);
+}
+
+/* ---------- Fields ---------- */
+
+.auth-form { display: block; }
+
+.auth-field { margin-bottom: 16px; }
+
+.auth-field > label:not(.auth-check) {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--auth-ink);
+}
+
+.auth-input {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.auth-input > ion-icon {
+    position: absolute;
+    left: 14px;
+    font-size: 20px;
+    color: var(--auth-muted);
+    pointer-events: none;
+}
+
+.auth-input input {
+    width: 100%;
+    height: 46px;
+    padding: 0 44px;
+    font: inherit;
+    color: var(--auth-ink);
+    background: var(--auth-field);
+    border: 1px solid var(--auth-border);
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s, background-color 0.15s;
+}
+
+.auth-input input::placeholder { color: #94a3b8; opacity: 1; }
+
+.auth-input input:focus {
+    background: #ffffff;
+    border-color: var(--auth-purple);
+    box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.18);
+}
+
+.auth-input input.input-validation-error { border-color: var(--auth-danger); }
+
+.auth-input input.input-validation-error:focus {
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+}
+
+.auth-input__toggle {
+    position: absolute;
+    right: 6px;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    color: var(--auth-muted);
+    background: transparent;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.auth-input__toggle:hover { color: var(--auth-ink); background: #e2e8f0; }
+.auth-input__toggle ion-icon { position: static; font-size: 20px; color: inherit; }
+
+/* jQuery validate / ASP.NET unobtrusive classes */
+.field-validation-error {
+    display: block;
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--auth-danger);
+}
+
+.field-validation-valid { display: none; }
+
+/* ---------- Checkbox ---------- */
+
+.auth-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 4px;
+    font-size: 14px;
+    color: var(--auth-text);
+    cursor: pointer;
+}
+
+.auth-check input {
+    flex: none;
+    width: 18px;
+    height: 18px;
+    margin: 2px 0 0;
+    accent-color: var(--auth-purple);
+    cursor: pointer;
+}
+
+.auth-form > .auth-check { margin-bottom: 20px; }
+
+/* ---------- Password strength ---------- */
+
+.auth-strength { display: none; margin-top: 8px; }
+.auth-strength.is-active { display: block; }
+
+.auth-strength__bars {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+}
+
+.auth-strength__bars span {
+    height: 4px;
+    border-radius: 2px;
+    background: var(--auth-border);
+    transition: background-color 0.15s;
+}
+
+.auth-strength[data-level="1"] .auth-strength__bars span:nth-child(-n+1) { background: #ef4444; }
+.auth-strength[data-level="2"] .auth-strength__bars span:nth-child(-n+2) { background: #f59e0b; }
+.auth-strength[data-level="3"] .auth-strength__bars span:nth-child(-n+3) { background: #84cc16; }
+.auth-strength[data-level="4"] .auth-strength__bars span:nth-child(-n+4) { background: #22c55e; }
+
+.auth-strength__label { margin-top: 4px; font-size: 12px; color: var(--auth-muted); }
+
+/* ---------- Alerts ---------- */
+
+.auth-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding: 12px 14px;
+    font-size: 14px;
+    line-height: 1.45;
+    border-radius: 10px;
+}
+
+.auth-alert ion-icon { flex: none; margin-top: 1px; font-size: 20px; }
+.auth-alert ul { margin: 0; padding-left: 18px; }
+
+.auth-alert--info  { color: #1e40af; background: var(--auth-info-soft); }
+.auth-alert--error { color: #991b1b; background: var(--auth-danger-soft); }
+
+.auth-alert.validation-summary-valid { display: none; }
+
+/* ---------- Button and footer link ---------- */
+
+.auth-btn {
+    display: block;
+    width: 100%;
+    height: 46px;
+    font: inherit;
+    font-weight: 600;
+    color: #ffffff;
+    background: linear-gradient(to right, var(--auth-pink), var(--auth-purple));
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+}
+
+.auth-btn:hover  { opacity: 0.88; }
+.auth-btn:focus-visible { outline: 3px solid rgba(168, 85, 247, 0.35); outline-offset: 2px; }
+
+.auth-switch {
+    margin: 20px 0 0;
+    text-align: center;
+    font-size: 14px;
+    color: var(--auth-muted);
+}
+
+.auth-switch a {
+    font-weight: 600;
+    color: var(--auth-purple);
+    text-decoration: none;
+}
+
+.auth-switch a:hover { text-decoration: underline; }

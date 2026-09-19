@@ -1,0 +1,94 @@
+@model SignUpVM
+
+@{
+    ViewData["Title"]      = "Sign up";
+    ViewData["BrandTitle"] = "Join Lume today.";
+    ViewData["BrandText"]  = "Create your account and start sharing photos, stories and reels in minutes.";
+}
+
+<div class="auth-head">
+    <h1>Create your account</h1>
+    <p>It takes less than a minute.</p>
+</div>
+
+@if (ViewData["PreviewNotice"] is string notice)
+{
+    <div class="auth-alert auth-alert--info" role="status">
+        <ion-icon name="information-circle-outline"></ion-icon>
+        <span>@notice</span>
+    </div>
+}
+
+<form asp-area="Auth" asp-controller="Account" asp-action="SignUp" method="post" class="auth-form">
+
+    <div asp-validation-summary="ModelOnly" class="auth-alert auth-alert--error" role="alert"></div>
+
+    @* Full name *@
+    <div class="auth-field">
+        <label asp-for="FullName">Full name</label>
+        <div class="auth-input">
+            <ion-icon name="person-outline"></ion-icon>
+            <input asp-for="FullName" autocomplete="name" placeholder="Your full name" autofocus />
+        </div>
+        <span asp-validation-for="FullName"></span>
+    </div>
+
+    @* Email *@
+    <div class="auth-field">
+        <label asp-for="Email">Email</label>
+        <div class="auth-input">
+            <ion-icon name="mail-outline"></ion-icon>
+            <input asp-for="Email" type="email" autocomplete="email" placeholder="you@example.com" />
+        </div>
+        <span asp-validation-for="Email"></span>
+    </div>
+
+    @* Password *@
+    <div class="auth-field">
+        <label asp-for="Password">Password</label>
+        <div class="auth-input">
+            <ion-icon name="lock-closed-outline"></ion-icon>
+            <input asp-for="Password" autocomplete="new-password" placeholder="At least 8 characters" />
+            <button type="button" class="auth-input__toggle" data-toggle-password="Password"
+                    aria-label="Show password" aria-pressed="false">
+                <ion-icon name="eye-outline"></ion-icon>
+            </button>
+        </div>
+        <span asp-validation-for="Password"></span>
+
+        <div class="auth-strength" data-strength-for="Password" data-level="0">
+            <div class="auth-strength__bars"><span></span><span></span><span></span><span></span></div>
+            <div class="auth-strength__label" data-strength-label></div>
+        </div>
+    </div>
+
+    @* Confirm password *@
+    <div class="auth-field">
+        <label asp-for="ConfirmPassword">Confirm password</label>
+        <div class="auth-input">
+            <ion-icon name="shield-checkmark-outline"></ion-icon>
+            <input asp-for="ConfirmPassword" autocomplete="new-password" placeholder="Re-enter your password" />
+            <button type="button" class="auth-input__toggle" data-toggle-password="ConfirmPassword"
+                    aria-label="Show password" aria-pressed="false">
+                <ion-icon name="eye-outline"></ion-icon>
+            </button>
+        </div>
+        <span asp-validation-for="ConfirmPassword"></span>
+    </div>
+
+    @* Terms *@
+    <div class="auth-field">
+        <label class="auth-check">
+            <input asp-for="AcceptTerms" required data-msg-required="You need to accept the terms to continue." />
+            <span>I agree to the Terms of Service and Privacy Policy</span>
+        </label>
+        <span asp-validation-for="AcceptTerms"></span>
+    </div>
+
+    <button type="submit" class="auth-btn">Create account</button>
+</form>
+
+<p class="auth-switch">
+    Already have an account?
+    <a asp-area="Auth" asp-controller="Account" asp-action="Login">Log in</a>
+</p>

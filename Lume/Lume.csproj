@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\LumeAuth\LumeAuth.csproj" />
     <ProjectReference Include="..\LumeData\LumeData.csproj" />
   </ItemGroup>
 

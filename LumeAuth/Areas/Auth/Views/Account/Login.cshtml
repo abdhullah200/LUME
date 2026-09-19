@@ -1,0 +1,65 @@
+@model LoginVM
+
+@{
+    ViewData["Title"]      = "Log in";
+    ViewData["BrandTitle"] = "Good to see you again.";
+    ViewData["BrandText"]  = "Catch up on the posts, stories and reels you missed.";
+}
+
+<div class="auth-head">
+    <h1>Welcome back</h1>
+    <p>Log in to see what your friends are sharing.</p>
+</div>
+
+@if (ViewData["PreviewNotice"] is string notice)
+{
+    <div class="auth-alert auth-alert--info" role="status">
+        <ion-icon name="information-circle-outline"></ion-icon>
+        <span>@notice</span>
+    </div>
+}
+
+<form asp-area="Auth" asp-controller="Account" asp-action="Login" method="post" class="auth-form">
+
+    <div asp-validation-summary="ModelOnly" class="auth-alert auth-alert--error" role="alert"></div>
+
+    @* Written by hand on purpose: asp-for would render the raw posted/query value from ModelState
+       instead of the sanitised Model.ReturnUrl. *@
+    <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl" />
+
+    @* Email *@
+    <div class="auth-field">
+        <label asp-for="Email">Email</label>
+        <div class="auth-input">
+            <ion-icon name="mail-outline"></ion-icon>
+            <input asp-for="Email" type="email" autocomplete="email" placeholder="you@example.com" autofocus />
+        </div>
+        <span asp-validation-for="Email"></span>
+    </div>
+
+    @* Password *@
+    <div class="auth-field">
+        <label asp-for="Password">Password</label>
+        <div class="auth-input">
+            <ion-icon name="lock-closed-outline"></ion-icon>
+            <input asp-for="Password" autocomplete="current-password" placeholder="Your password" />
+            <button type="button" class="auth-input__toggle" data-toggle-password="Password"
+                    aria-label="Show password" aria-pressed="false">
+                <ion-icon name="eye-outline"></ion-icon>
+            </button>
+        </div>
+        <span asp-validation-for="Password"></span>
+    </div>
+
+    <label class="auth-check">
+        <input asp-for="RememberMe" />
+        <span>Keep me logged in</span>
+    </label>
+
+    <button type="submit" class="auth-btn">Log in</button>
+</form>
+
+<p class="auth-switch">
+    New to Lume?
+    <a asp-area="Auth" asp-controller="Account" asp-action="SignUp">Create an account</a>
+</p>
