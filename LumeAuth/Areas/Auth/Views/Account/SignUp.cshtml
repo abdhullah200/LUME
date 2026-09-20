@@ -1,9 +1,12 @@
 @model SignUpVM
 
 @{
-    ViewData["Title"]      = "Sign up";
+    ViewData["Title"] = "Sign up";
     ViewData["BrandTitle"] = "Join Lume today.";
-    ViewData["BrandText"]  = "Create your account and start sharing photos, stories and reels in minutes.";
+    ViewData["BrandText"] = "Create your account and start sharing photos, stories and reels in minutes.";
+
+    int currentYear = DateTime.UtcNow.Year;
+    string[] monthNames = System.Globalization.CultureInfo.InvariantCulture.DateTimeFormat.MonthNames;
 }
 
 <div class="auth-head">
@@ -31,6 +34,17 @@
             <input asp-for="FullName" autocomplete="name" placeholder="Your full name" autofocus />
         </div>
         <span asp-validation-for="FullName"></span>
+    </div>
+
+    @* Username *@
+    <div class="auth-field">
+        <label asp-for="Username">Username</label>
+        <div class="auth-input">
+            <ion-icon name="at-outline"></ion-icon>
+            <input asp-for="Username" autocomplete="username" autocapitalize="none" spellcheck="false"
+                   maxlength="30" placeholder="Choose a username" />
+        </div>
+        <span asp-validation-for="Username"></span>
     </div>
 
     @* Email *@
@@ -74,6 +88,48 @@
             </button>
         </div>
         <span asp-validation-for="ConfirmPassword"></span>
+    </div>
+
+    @* Birthday: one rule for the whole date, so one message under the row (it lives on BirthYear) *@
+    <div class="auth-field">
+        <label for="BirthMonth">Birthday</label>
+        <div class="auth-birthday" role="group" aria-label="Birthday" data-birthday>
+
+            <div class="auth-select">
+                <select asp-for="BirthMonth" autocomplete="bday-month">
+                    <option value="">Month</option>
+                    @for (int m = 1; m <= 12; m++)
+                    {
+                        <option value="@m">@monthNames[m - 1]</option>
+                    }
+                </select>
+                <ion-icon name="chevron-down-outline"></ion-icon>
+            </div>
+
+            <div class="auth-select">
+                <select asp-for="BirthDay" autocomplete="bday-day">
+                    <option value="">Day</option>
+                    @for (int d = 1; d <= 31; d++)
+                    {
+                        <option value="@d">@d</option>
+                    }
+                </select>
+                <ion-icon name="chevron-down-outline"></ion-icon>
+            </div>
+
+            <div class="auth-select">
+                <select asp-for="BirthYear" autocomplete="bday-year">
+                    <option value="">Year</option>
+                    @for (int y = currentYear; y >= currentYear - 100; y--)
+                    {
+                        <option value="@y">@y</option>
+                    }
+                </select>
+                <ion-icon name="chevron-down-outline"></ion-icon>
+            </div>
+
+        </div>
+        <span asp-validation-for="BirthYear"></span>
     </div>
 
     @* Terms *@
